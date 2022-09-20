@@ -12,6 +12,20 @@ export const Application = () => {
   const [pokemon, setPokemon] = useState([]);
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    fetch(toURL(searchTerm))
+      .then(async (response) => {
+        if (response.ok) {
+          const { pokemon } = await response.json();
+          return setPokemon(pokemon);
+        } else {
+          const { error } = await response.json();
+          return setError(error);
+        }
+      })
+      .catch((error) => setError(JSON.stringify(error)));
+  }, [searchTerm, setError, setPokemon]);
+
   return (
     <main className="m-auto mx-8 my-8 border-8 border-pink-300 p-4 flex flex-col gap-4">
       <div className="flex items-center gap-4">
