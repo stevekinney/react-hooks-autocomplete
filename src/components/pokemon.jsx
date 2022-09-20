@@ -11,15 +11,16 @@ const Error = ({ message }) => (
 );
 
 const Pokemon = ({ pokemon, loading, error }) => {
+  console.log({ error });
   if (loading) return <Loading />;
-  if (error) return <Error message={error} />;
+  if (error) return <Error message={error.message} />;
   if (!pokemon) return null;
   if (!pokemon.length) return null;
 
   return (
     <section className="flex gap-4 flex-col">
       {pokemon.map(({ id, name }) => (
-        <article className="p-4 border-2 border-pink-400">
+        <article key={id} className="p-4 border-2 border-pink-400">
           <h2>
             {name} (#{id})
           </h2>
